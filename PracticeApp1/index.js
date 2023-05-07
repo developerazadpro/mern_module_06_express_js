@@ -19,7 +19,7 @@
     app.listen(port,  () =>{
         console.log("Server Run Success.")
     })
-
+    // Working With Response
     // simple string response
     app.get('/string-response', (req, res) => {
         res.end("Simple string response");
@@ -82,3 +82,43 @@
         res.status(201)
         res.end("Cookie clear success");
     });
+    // Response End
+
+    // Working with Request
+    // simple get request
+    app.get('/simple-get', (req, res) => {
+        res.end("simple get request");
+    });
+
+    // get request with url query
+    app.get('/get-query-parameter', (req, res) => {
+        let firstName = req.query.firstName;
+        let lastName  = req.query.lastName;
+        res.end(firstName+' '+ lastName);
+    })
+    // get request in header
+    app.get('/get-req-header', (req, res) => {
+        let firstName = req.header("firstName");
+        let lastName  = req.header("lastName");
+        let userAgent  = req.header("User-Agent");
+        res.end(firstName+' '+ lastName + ' User Agent => ' + userAgent);
+    })
+    // post request same as above get request
+    app.post('/simple-post', (req, res) => {
+        res.end("simple get request");
+    });
+
+    // get request with url query
+    app.post('/post-query-parameter', (req, res) => {
+        let firstName = req.query.firstName;
+        let lastName  = req.query.lastName;
+        res.end(firstName+' '+ lastName);
+    })
+    // get request in header
+    app.post('/post-req-header', (req, res) => {
+        let firstName = req.header("firstName");
+        let lastName  = req.header("lastName");
+        let userAgent  = req.header("User-Agent");
+        res.end(firstName+' '+ lastName + ' User Agent => ' + userAgent);
+    })
+    // Request End

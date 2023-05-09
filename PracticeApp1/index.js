@@ -1,8 +1,16 @@
     const express = require('express');
-    const port = 8000;
     const app = express();
 
+    const port = 8000;
+    const bodyParser = require('body-parser');
+
+    const multer = require('multer');
+
+
+    //app.use(multer.array());
     app.use(express.static('public'));
+    // parse application/json
+    app.use(bodyParser.json());
 
     app.get('/',  (req, res) => {
         res.send("Hello Express JS, How you doing?");
@@ -122,3 +130,60 @@
         res.end(firstName+' '+ lastName + ' User Agent => ' + userAgent);
     })
     // Request End
+
+    // post application json
+    app.post('/post-app-json', (req, res) => {
+        let jsonData = req.body;
+        let firstName = jsonData['firstName'];
+        let jsonString = JSON.stringify(jsonData);
+        //res.send(firstName);
+        res.send(jsonString);
+    });
+
+    // multipart form data
+    app.post('/multipart-form-data', (req, res) => {
+        let jsonData = req.body;
+        let jsonString = JSON.stringify(jsonData);
+        res.send(jsonString);
+    });
+
+    // file upload
+    const storage = multer.diskStorage({
+        destination: (req, file, callback) =>{
+            callback(null, './uploads');
+        },
+        filename: (req, file, callback) => {
+            callback(null, file.originalname);
+        }
+    });
+    const upload = multer({ storage : storage }).single('myfile');
+    app.post('/upload-file', (req, res) => {
+        upload(req, res, (err) => {
+            if(err){
+                return res.end("Error uploading file.");
+            }
+            return res.end("File upload successful.");
+        })
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

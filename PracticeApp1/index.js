@@ -24,9 +24,7 @@
         res.send("Contact Page");
     });
 
-    app.listen(port,  () =>{
-        console.log("Server Run Success.")
-    })
+
     // Working With Response
     // simple string response
     app.get('/string-response', (req, res) => {
@@ -164,6 +162,16 @@
             }
             return res.end("File upload successful.");
         })
+    });
+
+
+
+
+
+
+
+    app.listen(port,  () =>{
+        console.log("Server Run Success.")
     })
 
 

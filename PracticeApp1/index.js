@@ -1,4 +1,5 @@
     const express = require('express');
+    const path = require('path')
     const app = express();
 
     const port = 8000;
@@ -9,8 +10,29 @@
 
     //app.use(multer.array());
     app.use(express.static('public'));
+    app.use(express.static('../assignment/book-collection'));
+
+    // send file instead of above
+    app.get('/send-file', (req, res)=> {
+        res.sendFile(path.join(__dirname + '/index.js'))
+    })
     // parse application/json
     app.use(bodyParser.json());
+
+
+    // middleware using
+    function validateUser(req, res, next){
+        res.locals.user == true;
+        console.log('01_middleware_check')
+        next();
+    }
+    app.use('/validate-user', validateUser)
+    app.get('/validate-user', (req, res) => {
+        res.send('02_after_checking_middleware');
+    })
+    // end
+
+
 
     app.get('/',  (req, res) => {
         res.send("Hello Express JS, How you doing?");
